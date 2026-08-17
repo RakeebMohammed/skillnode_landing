@@ -1,0 +1,4 @@
+"use client";
+import { useEffect, useState } from "react";
+import { DeviceChart } from "@/components/admin/Charts";
+export default function DevicesPage() { const [items, setItems] = useState<any[]>([]); useEffect(() => { fetch("/api/admin/stats").then(r => r.json()).then(x => setItems(x.devices || [])); }, []); return <main><div className="admin-top"><div><div className="crumb">Analytics workspace / Devices</div><h1>Device analytics</h1><p>Understand which screens visitors use to reach you.</p></div></div><div className="two-col"><div className="panel"><h2>Sessions by device</h2><div className="chart-box"><DeviceChart items={items} /></div></div><div className="panel"><h2>Device breakdown</h2>{items.map(item => <div className="bar-row" key={item.name}><span>{item.name}</span><b>{item.value} sessions</b></div>)}</div></div></main>; }

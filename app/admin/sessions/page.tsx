@@ -1,0 +1,9 @@
+"use client";
+import { useEffect, useMemo, useState } from "react";
+
+export default function SessionsPage() {
+  const [rows, setRows] = useState<any[]>([]); const [query, setQuery] = useState("");
+  useEffect(() => { fetch("/api/admin/sessions", { cache: "no-store" }).then(r => r.ok ? r.json() : Promise.reject()).then(x => setRows(x.sessions || [])).catch(() => setRows([])); }, []);
+  const filtered = useMemo(() => rows.filter(r => JSON.stringify([r.source, r.channel, r.campaign, r.ip, r.city, r.country, r.device]).toLowerCase().includes(query.toLowerCase())), [rows, query]);
+  return <div><div className="admin-top"><div><div className="crumb">Analytics workspace / Sessions</div><h1>Visitor sessions</h1><p>Search every visit by campaign, IP address, location or platform.</p></div><input className="table-search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search IP, campaign, source..." /></div><div className="panel table-wrap"><table><thead><tr><th>Started</th><th>IP / location</th><th>Source</th><th>Campaign</th><th>Landing page</th><th>Platform</th><th>Pages</th><th>Duration</th></tr></thead><tbody>{filtered.map(r => <tr key={r.sessionId}><td>{new Date(r.startedAt).toLocaleString()}</td><td><span className="mono">{r.ip || "Unavailable"}</span><br /><small>{r.city || "—"}, {r.region || r.country || "—"}</small></td><td><b>{r.source || "Direct"}</b><br /><small>{r.channel || r.medium || "none"}</small></td><td>{r.campaign || "—"}<br /><small>{r.content || ""}</small></td><td className="truncate-cell" title={r.landingPageUrl}>{r.landingPage || "/"}</td><td>{r.device || "—"} · {r.browser || "—"}<br /><small>{r.os || "—"}</small></td><td>{r.pageCount || 0}</td><td>{Math.round(r.duration || 0)}s</td></tr>)}</tbody></table>{!filtered.length && <div className="empty">No matching sessions yet.</div>}</div></div>;
+}
