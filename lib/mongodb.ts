@@ -11,7 +11,7 @@ globalForMongoose.mongooseCache = cached;
 export async function connectDB() {
   if (cached.conn) return cached.conn;
   if (!cached.promise) {
-    cached.promise = mongoose.connect(uri, { bufferCommands: false, serverSelectionTimeoutMS: 10000 })
+    cached.promise = mongoose.connect(uri!, { bufferCommands: false, serverSelectionTimeoutMS: 10000 })
       .catch((error) => {
         // A failed connection must not remain cached forever during local development.
         cached.promise = null;

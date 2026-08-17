@@ -6,6 +6,7 @@ import Admin from "@/models/Admin";
 
 const secret = () => new TextEncoder().encode(process.env.AUTH_SECRET || "development-only-secret-change-me");
 const COOKIE = "skillnode_admin";
+type AdminRecord = { _id: unknown; email: string; passwordHash: string };
 
 export async function ensureAdmin() {
   await connectDB();
@@ -14,7 +15,7 @@ export async function ensureAdmin() {
   if (!email || !password) throw new Error("ADMIN_EMAIL and ADMIN_PASSWORD are required");
   const passwordHash = await bcrypt.hash(password, 12);
   await Admin.updateOne({ email }, { $setOnInsert: { email, passwordHash, name: "Administrator" } }, { upsert: true });
-  const existing = await Admin.findOne({ email }).lean();
+  const existing = await Admin.findOne({ email }).lean() as AdminRecord | null;
   if (existing && !(await bcrypt.compare(password, existing.passwordHash))) {
     await Admin.updateOne({ email }, { $set: { passwordHash } });
   }
@@ -23,7 +24,7 @@ export async function ensureAdmin() {
 
 export async function loginAdmin(email: string, password: string) {
   await ensureAdmin();
-  const admin = await Admin.findOne({ email });
+  const admin = await Admin.findOne({ email }) as AdminRecord | null;
   if (!admin || !(await bcrypt.compare(password, admin.passwordHash))) return false;
   const token = await new SignJWT({ sub: String(admin._id), email: admin.email, role: "admin" })
     .setProtectedHeader({ alg: "HS256" })
