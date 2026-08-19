@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { getClientIp, parseUserAgent } from "@/lib/request";
-import { lookupGeo } from "@/lib/geo";
+import { geoFromHeaders, lookupGeo } from "@/lib/geo";
 import { classifyTraffic } from "@/lib/traffic";
 import Lead from "@/models/Lead";
 import Session from "@/models/Session";
@@ -24,7 +24,8 @@ export async function POST(req: Request) {
     const ip = await getClientIp(req);
     const ua = req.headers.get("user-agent");
     const { device, browser, os } = parseUserAgent(ua);
-    const geo = await lookupGeo(ip);
+    const edgeGeo = geoFromHeaders(req.headers);
+    const geo = edgeGeo.country ? edgeGeo : await lookupGeo(ip);
     let session: any = null;
     // document.referrer retains the external platform; the request Referer is normally this landing page.
     const traffic = classifyTraffic(body.pageUrl, body.referrer || req.headers.get("referer"));

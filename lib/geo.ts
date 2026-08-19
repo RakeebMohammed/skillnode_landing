@@ -2,6 +2,29 @@ export type Geo = { country: string | null; region: string | null; city: string 
 
 const fallback: Geo = { country: null, region: null, city: null, latitude: null, longitude: null };
 
+function numberOrNull(value: string | null) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+/** Vercel provides these headers at the edge, without requiring a third-party geo lookup. */
+export function geoFromHeaders(headers: Headers): Geo {
+  const countryCode = headers.get("x-vercel-ip-country");
+  if (!countryCode) return fallback;
+  let country = countryCode;
+  try { country = new Intl.DisplayNames(["en"], { type: "region" }).of(countryCode) || countryCode; } catch {}
+  const cityValue = headers.get("x-vercel-ip-city");
+  let city: string | null = cityValue;
+  try { if (cityValue) city = decodeURIComponent(cityValue); } catch {}
+  return {
+    country,
+    region: headers.get("x-vercel-ip-country-region"),
+    city,
+    latitude: numberOrNull(headers.get("x-vercel-ip-latitude")),
+    longitude: numberOrNull(headers.get("x-vercel-ip-longitude")),
+  };
+}
+
 export async function lookupGeo(ip: string): Promise<Geo> {
   if (!ip || ip === "unknown" || ip === "::1" || ip === "127.0.0.1" || ip.startsWith("192.168.") || ip.startsWith("10.") || ip.startsWith("172.16.")) return fallback;
   const base = process.env.GEOIP_API_URL || "https://ipapi.co";

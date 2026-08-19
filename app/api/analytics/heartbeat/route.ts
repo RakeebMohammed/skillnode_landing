@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { getClientIp, parseUserAgent } from "@/lib/request";
-import { lookupGeo } from "@/lib/geo";
+import { geoFromHeaders, lookupGeo } from "@/lib/geo";
 import Visitor from "@/models/Visitor";
 import Session from "@/models/Session";
 
@@ -15,7 +15,8 @@ export async function POST(req: Request) {
     const ua = req.headers.get("user-agent");
     const { device, browser, os } = parseUserAgent(ua);
     const existing = await Visitor.findOne({ visitorId: body.visitorId }).select("country").lean() as { country?: string | null } | null;
-    const geo = existing?.country ? {} : await lookupGeo(ip);
+    const edgeGeo = geoFromHeaders(req.headers);
+    const geo = existing?.country ? {} : edgeGeo.country ? edgeGeo : await lookupGeo(ip);
     await Visitor.updateOne({ visitorId: body.visitorId }, { $set: { ip, ...geo, device, browser, os, lastSeen: now }, $setOnInsert: { visitorId: body.visitorId, firstSeen: now } }, { upsert: true });
     const session = await Session.findOne({ sessionId: body.sessionId }).select("startedAt").lean() as { startedAt?: Date | string | null } | null;
     const duration = session?.startedAt ? Math.max(0, Math.floor((now.getTime() - new Date(session.startedAt).getTime()) / 1000)) : 0;

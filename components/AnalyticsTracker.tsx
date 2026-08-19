@@ -34,8 +34,11 @@ export default function AnalyticsTracker() {
     const page = pathname || window.location.pathname;
     const pageUrl = window.location.href;
 
-    send("/api/analytics/session", { visitorId, sessionId, page, pageUrl, referrer: document.referrer || null });
-    send("/api/analytics/page-view", { visitorId, sessionId, page, pageUrl, title: document.title, referrer: document.referrer || null });
+    // Create the session first. This prevents the page-view request from creating an incomplete session.
+    void (async () => {
+      await send("/api/analytics/session", { visitorId, sessionId, page, pageUrl, referrer: document.referrer || null });
+      await send("/api/analytics/page-view", { visitorId, sessionId, page, pageUrl, title: document.title, referrer: document.referrer || null });
+    })();
 
     const heartbeat = () => send("/api/analytics/heartbeat", { visitorId, sessionId, page, pageUrl });
     heartbeat();
