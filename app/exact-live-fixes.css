@@ -1,0 +1,2 @@
+/* Structural values that depend on the local footer markup. */
+.exact-footer{padding-top:80px}@media(min-width:1024px){.exact-footer-grid{grid-template-columns:1fr 1fr}}

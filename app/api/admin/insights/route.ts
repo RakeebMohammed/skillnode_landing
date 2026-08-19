@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ rows });
     }
     if (kind === "organic-ai") {
-      const rows = await Session.aggregate([{ $match: { channel: { $in: ["Organic Search", "Referral"] } } }, { $group: { _id: { source: "$source", channel: "$channel" }, sessions: { $sum: 1 }, visitors: { $addToSet: "$visitorId" }, views: { $sum: "$pageCount" } } }, { $project: { source: "$_id.source", channel: "$_id.channel", sessions: 1, views: 1, visitors: { $size: "$visitors" } } }, { $sort: { sessions: -1 } }]);
+      const rows = await Session.aggregate([{ $match: { channel: "Organic Search" } }, { $group: { _id: { source: "$source", channel: "$channel" }, sessions: { $sum: 1 }, visitors: { $addToSet: "$visitorId" }, views: { $sum: "$pageCount" } } }, { $project: { source: "$_id.source", channel: "$_id.channel", sessions: 1, views: 1, visitors: { $size: "$visitors" } } }, { $sort: { sessions: -1 } }]);
       return NextResponse.json({ rows });
     }
     if (kind === "booking") {

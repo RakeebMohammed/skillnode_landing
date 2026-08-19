@@ -35,7 +35,7 @@ export default function AnalyticsTracker() {
     const pageUrl = window.location.href;
 
     send("/api/analytics/session", { visitorId, sessionId, page, pageUrl, referrer: document.referrer || null });
-    send("/api/analytics/page-view", { visitorId, sessionId, page, pageUrl, title: document.title });
+    send("/api/analytics/page-view", { visitorId, sessionId, page, pageUrl, title: document.title, referrer: document.referrer || null });
 
     const heartbeat = () => send("/api/analytics/heartbeat", { visitorId, sessionId, page, pageUrl });
     heartbeat();

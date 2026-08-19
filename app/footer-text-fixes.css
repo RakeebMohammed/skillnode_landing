@@ -1,0 +1,2 @@
+/* The live description uses Tailwind text-sm + leading-6 (14px / 24px). */
+.exact-footer-about p{font-size:14px;line-height:24px}.exact-footer-card{container-type:inline-size}.exact-wordmark{display:flex;justify-content:center;width:100%;font-size:clamp(1rem,17vw,13rem);letter-spacing:-.06em}

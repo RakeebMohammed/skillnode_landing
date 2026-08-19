@@ -25,7 +25,7 @@ export function classifyTraffic(urlString?: string | null, referrerHeader?: stri
   const term = params.get("utm_term") || null;
   const referrer = referrerHeader || null;
 
-  if (utmSource) {
+  if (utmSource || campaign || utmMedium) {
     const pretty: Record<string, string> = {
       instagram: "Instagram",
       facebook: "Facebook",
@@ -37,9 +37,9 @@ export function classifyTraffic(urlString?: string | null, referrerHeader?: stri
       whatsapp: "WhatsApp",
     };
     return {
-      source: pretty[utmSource] ?? utmSource.charAt(0).toUpperCase() + utmSource.slice(1),
-      medium: utmMedium || "referral",
-      channel: /paid|cpc|ppc|ad/i.test(utmMedium) ? "Paid " + (pretty[utmSource] ?? "Campaign") : utmMedium === "social" ? "Organic Social" : "Campaign",
+      source: utmSource ? (pretty[utmSource] ?? utmSource.charAt(0).toUpperCase() + utmSource.slice(1)) : "Campaign",
+      medium: utmMedium || "campaign",
+      channel: /paid|cpc|ppc|ad/i.test(utmMedium) ? "Paid " + (utmSource ? (pretty[utmSource] ?? "Campaign") : "Campaign") : utmMedium === "social" ? "Organic Social" : "Campaign",
       campaign,
       content,
       term,
@@ -64,8 +64,10 @@ export function classifyTraffic(urlString?: string | null, referrerHeader?: stri
     for (const [pattern, source, medium] of matches) {
       if (pattern.test(host)) return { source, medium, channel: medium === "social" ? "Organic Social" : "Organic Search", campaign: null, content: null, term: null, referrer };
     }
-    return { source: host, medium: "referral", channel: "Referral", campaign: null, content: null, term: null, referrer };
+    // We intentionally do not report arbitrary websites as a "Referral" source.
+    // Only recognized platforms/search engines are surfaced in the dashboard.
+    return { source: "Direct", medium: "none", channel: "Direct", campaign: null, content: null, term: null, referrer };
   } catch {
-    return { source: "Referral", medium: "referral", channel: "Referral", campaign: null, content: null, term: null, referrer };
+    return { source: "Direct", medium: "none", channel: "Direct", campaign: null, content: null, term: null, referrer };
   }
 }

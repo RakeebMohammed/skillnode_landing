@@ -1,0 +1,2 @@
+/* Use SkillNode's dedicated white-wordmark asset in dark mode; its dot remains green. */
+.dark .exact-footer-about>img{content:url("https://skillnode.in/logo-w-dot.svg");filter:none!important}

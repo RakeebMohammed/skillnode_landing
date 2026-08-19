@@ -1,0 +1,1 @@
+.chart-large,.chart-box{position:relative}.chart-large{min-height:300px;padding:8px 4px 0}.chart-box{min-height:260px;padding:8px 0 0}.chart-box canvas,.chart-large canvas{max-width:100%}@media(max-width:650px){.chart-large{min-height:240px}.chart-box{min-height:230px}}
