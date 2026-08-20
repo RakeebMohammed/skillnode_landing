@@ -47,7 +47,7 @@ export default function AnalyticsTracker() {
     const onClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement | null;
       const element = target?.closest("a,button") as HTMLElement | null;
-      if (!element) return;
+      if (!element || element.closest('[data-analytics-ignore="true"]')) return;
       const label = (element.textContent || element.getAttribute("aria-label") || "").trim().slice(0, 100);
       send("/api/analytics/event", { visitorId, sessionId, type: "click", page, element: element.tagName.toLowerCase(), metadata: { label, href: (element as HTMLAnchorElement).href || null } });
     };

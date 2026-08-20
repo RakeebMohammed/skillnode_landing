@@ -1,0 +1,269 @@
+/* Consistent, approachable typography across every admin route. */
+.admin-app {
+  --admin-title: #1f382c;
+  --admin-heading: #314a3e;
+  --admin-subheading: #496055;
+  --admin-muted: #74837b;
+  --admin-accent: #2f8558;
+  font-family: var(--font-inter), "Segoe UI", sans-serif;
+}
+
+.admin-app .admin-content {
+  width: calc(100% - 278px);
+  min-width: 0;
+}
+
+.admin-app h1,
+.admin-app h2,
+.admin-app h3,
+.admin-app h4 {
+  color: var(--admin-heading);
+  font-family: inherit;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.admin-app .admin-top h1 {
+  margin: 0;
+  color: var(--admin-title);
+  font-size: clamp(26px, 2.25vw, 32px);
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+}
+
+.admin-app .admin-top:not(.dashboard-hero) h1::after {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 3px;
+  margin-top: 11px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2f8558, #82bd93);
+}
+
+.admin-app .dashboard-hero h1 {
+  color: #ffffff;
+  font-size: clamp(28px, 2.5vw, 34px);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.admin-app .crumb {
+  margin-bottom: 8px;
+  color: #5f786c;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.admin-app .dashboard-hero .crumb {
+  color: #d7f0df;
+}
+
+.admin-app .admin-top p,
+.admin-app .panel p,
+.admin-app .muted {
+  color: var(--admin-muted);
+  line-height: 1.55;
+}
+
+.admin-app .panel h2,
+.admin-app .section-title {
+  margin: 0;
+  color: var(--admin-heading);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+
+.admin-app .panel h3,
+.admin-app .panel h4 {
+  color: var(--admin-subheading);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.admin-app .panel-kicker {
+  color: var(--admin-accent) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em;
+}
+
+.admin-app th,
+.admin-app .activity-table th {
+  color: #687970;
+  background: #f7faf8;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.admin-app .stat-card span,
+.admin-app .stat-card small {
+  color: #74837b;
+  font-weight: 500;
+}
+
+.admin-app .stat-card strong {
+  color: #294538;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.admin-app .bar-row b,
+.admin-app .activity-row b,
+.admin-app .visitor-main b,
+.admin-app .movement b,
+.admin-app .flow-session summary b,
+.admin-app td b {
+  color: #354e42;
+  font-weight: 600;
+}
+
+.admin-app .admin-sidebar nav a {
+  font-weight: 400;
+}
+
+.admin-app .admin-sidebar nav a.active {
+  color: #20382d;
+  font-weight: 500;
+}
+
+/* Keep the Leads workspace within the content viewport. */
+.admin-app .leads-table-wrap {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.admin-app .leads-export-note {
+  margin: -2px 2px 14px;
+  color: #74837b;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.admin-app .leads-table {
+  width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+}
+
+.admin-app .leads-table th,
+.admin-app .leads-table td {
+  min-width: 0;
+  padding: 12px 10px;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.admin-app .leads-table .lead-col-contact {
+  width: 21%;
+}
+
+.admin-app .leads-table .lead-col-intent {
+  width: 13%;
+}
+
+.admin-app .leads-table .lead-col-requirement {
+  width: 20%;
+}
+
+.admin-app .leads-table .lead-col-budget {
+  width: 16%;
+}
+
+.admin-app .leads-table .lead-col-attribution {
+  width: 17%;
+}
+
+.admin-app .leads-table .lead-col-submitted {
+  width: 13%;
+}
+
+.admin-app .leads-table a {
+  color: #2f7650;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 900px) {
+  .admin-app .leads-table,
+  .admin-app .leads-table tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .admin-app .leads-table thead {
+    display: none;
+  }
+
+  .admin-app .leads-table tbody {
+    display: grid;
+    gap: 12px;
+  }
+
+  .admin-app .leads-table tr {
+    display: block;
+    padding: 8px 14px;
+    border: 1px solid #e3ebe6;
+    border-radius: 12px;
+    background: #fbfdfc;
+  }
+
+  .admin-app .leads-table td,
+  .admin-app .leads-table .lead-col-contact,
+  .admin-app .leads-table .lead-col-intent,
+  .admin-app .leads-table .lead-col-requirement,
+  .admin-app .leads-table .lead-col-budget,
+  .admin-app .leads-table .lead-col-attribution,
+  .admin-app .leads-table .lead-col-submitted {
+    display: grid;
+    width: 100%;
+    grid-template-columns: minmax(92px, 30%) minmax(0, 1fr);
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid #edf2ef;
+  }
+
+  .admin-app .leads-table td:last-child {
+    border-bottom: 0;
+  }
+
+  .admin-app .leads-table td::before {
+    content: attr(data-label);
+    color: #728078;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+  }
+}
+
+@media (max-width: 1000px) and (min-width: 651px) {
+  .admin-app .admin-content {
+    width: calc(100% - 225px);
+  }
+}
+
+@media (max-width: 650px) {
+  .admin-app .admin-content {
+    width: 100%;
+  }
+
+  .admin-app .admin-top h1,
+  .admin-app .dashboard-hero h1 {
+    font-size: 26px;
+  }
+
+  .admin-app .panel h2,
+  .admin-app .section-title {
+    font-size: 15px;
+  }
+}

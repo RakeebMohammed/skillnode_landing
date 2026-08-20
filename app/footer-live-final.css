@@ -1,0 +1,435 @@
+/* Final isolated footer layer, loaded after all historical footer rules. */
+footer.skillnode-live-footer {
+  --live-footer-page: #ffffff;
+  --live-footer-surface: #ffffff;
+  --live-footer-heading: #020817;
+  --live-footer-muted: #020817;
+  --live-footer-border: #e2e8f0;
+  --live-footer-accent: #124c98;
+
+  position: relative;
+  overflow: hidden;
+  padding: 80px 0 0;
+  color: var(--live-footer-muted);
+  background: var(--live-footer-page);
+  font-family: var(--font-inter), "Segoe UI", sans-serif;
+}
+
+html.dark footer.skillnode-live-footer {
+  --live-footer-page: #000000;
+  --live-footer-surface: #080808;
+  --live-footer-heading: #ffffff;
+  --live-footer-muted: #ffffff;
+  --live-footer-border: #1e293b;
+}
+
+footer.skillnode-live-footer .footer-shell {
+  width: 100%;
+  max-width: 1152px;
+  margin: 0 auto;
+  padding-right: 24px;
+  padding-left: 24px;
+}
+
+footer.skillnode-live-footer .footer-card {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--live-footer-border) 60%, transparent);
+  border-radius: 36px;
+  background: var(--live-footer-surface);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.25);
+}
+
+footer.skillnode-live-footer .footer-card::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 160px;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--live-footer-surface) 70%, transparent),
+    color-mix(in srgb, var(--live-footer-surface) 40%, transparent),
+    transparent
+  );
+  pointer-events: none;
+}
+
+footer.skillnode-live-footer .footer-panel {
+  position: relative;
+  z-index: 2;
+  margin: 8px;
+  padding: 32px;
+  border: 1px solid color-mix(in srgb, var(--live-footer-border) 80%, transparent);
+  border-radius: 24px;
+  background: var(--live-footer-surface);
+  box-shadow: 0 28px 60px -25px rgba(0, 0, 0, 0.35);
+}
+
+footer.skillnode-live-footer .footer-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 0;
+  border: 0;
+}
+
+footer.skillnode-live-footer .footer-logo {
+  width: 144px;
+  height: auto;
+}
+
+footer.skillnode-live-footer .footer-brand p {
+  max-width: 448px;
+  margin: 16px 0 0;
+  color: var(--live-footer-muted) !important;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+footer.skillnode-live-footer .footer-social {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+footer.skillnode-live-footer .footer-social a {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--live-footer-border) !important;
+  border-radius: 8px;
+  color: var(--live-footer-muted) !important;
+  background: var(--live-footer-surface) !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+  transition: border-color 0.15s ease;
+}
+
+footer.skillnode-live-footer .footer-social a:hover {
+  color: var(--live-footer-muted) !important;
+  border-color: #00439c !important;
+  background: var(--live-footer-surface) !important;
+}
+
+footer.skillnode-live-footer .footer-social a:focus-visible {
+  outline: 2px solid #00439c;
+  outline-offset: 3px;
+}
+
+footer.skillnode-live-footer .footer-social svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+footer.skillnode-live-footer .footer-social a:nth-child(2) svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  stroke: none;
+}
+
+footer.skillnode-live-footer .footer-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+footer.skillnode-live-footer .footer-col h3 {
+  position: relative;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  color: var(--live-footer-heading) !important;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+
+footer.skillnode-live-footer .footer-col h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background: var(--live-footer-accent);
+}
+
+footer.skillnode-live-footer .footer-col ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+footer.skillnode-live-footer .footer-col li {
+  margin-bottom: 12px;
+}
+
+footer.skillnode-live-footer .footer-col a,
+footer.skillnode-live-footer .footer-legal a {
+  color: var(--live-footer-muted) !important;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+footer.skillnode-live-footer .footer-col a:hover,
+footer.skillnode-live-footer .footer-legal a:hover {
+  color: var(--live-footer-muted) !important;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+footer.skillnode-live-footer .footer-rule {
+  width: 100%;
+  height: 1px;
+  margin: 32px 0;
+  background: linear-gradient(90deg, transparent, rgba(18, 76, 152, 0.13), transparent);
+}
+
+footer.skillnode-live-footer .footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0;
+  border: 0;
+  color: var(--live-footer-muted) !important;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+footer.skillnode-live-footer .footer-bottom p {
+  margin: 0;
+}
+
+footer.skillnode-live-footer .footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+}
+
+footer.skillnode-live-footer .footer-wordmark {
+  position: absolute;
+  right: 0;
+  bottom: -57px;
+  left: 0;
+  z-index: 0;
+  margin: 0;
+  color: transparent !important;
+  background: linear-gradient(
+    90deg,
+    rgba(18, 76, 152, 0.1),
+    rgba(5, 150, 105, 0.1),
+    rgba(18, 76, 152, 0.1)
+  ) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  font-family: var(--font-inter), "Segoe UI", sans-serif;
+  font-size: clamp(100px, 18vw, 224px);
+  font-weight: 800;
+  line-height: 1.03;
+  letter-spacing: -0.06em;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+}
+
+html.dark footer.skillnode-live-footer .footer-logo {
+  filter: brightness(0) invert(1);
+}
+
+footer.skillnode-live-footer .footer-brand::after {
+  display: none;
+}
+
+html.dark footer.skillnode-live-footer .footer-brand::after {
+  content: "";
+  position: absolute;
+  top: 19px;
+  left: 138px;
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #049669;
+}
+
+@media (max-width: 800px) {
+  footer.skillnode-live-footer {
+    padding-top: 45px;
+  }
+
+  footer.skillnode-live-footer .footer-shell {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  footer.skillnode-live-footer .footer-card {
+    height: auto;
+    min-height: 600px;
+    padding-bottom: 112px;
+    border-radius: 26px;
+  }
+
+  footer.skillnode-live-footer .footer-panel {
+    padding: 24px;
+  }
+
+  footer.skillnode-live-footer .footer-top {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  footer.skillnode-live-footer .footer-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  footer.skillnode-live-footer .footer-wordmark {
+    right: 12px;
+    bottom: 18px;
+    left: 12px;
+    font-size: clamp(34px, 13vw, 96px);
+    line-height: 1;
+    letter-spacing: -0.07em;
+  }
+}
+
+@media (max-width: 639px) {
+  footer.skillnode-live-footer .footer-links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  footer.skillnode-live-footer .footer-panel {
+    margin: 6px;
+    padding: 20px;
+  }
+
+  footer.skillnode-live-footer .footer-links {
+    gap: 24px;
+  }
+
+  footer.skillnode-live-footer .footer-legal {
+    gap: 12px 20px;
+  }
+}
+
+/* Explicit dark rendering, kept last so every legacy footer rule is overridden. */
+html.dark footer.skillnode-live-footer.site-footer {
+  color: #ffffff !important;
+  background: #000000 !important;
+}
+
+html.dark footer.skillnode-live-footer .footer-card {
+  background: rgba(26, 26, 26, 0.6) !important;
+}
+
+html.dark footer.skillnode-live-footer .footer-panel,
+html.dark footer.skillnode-live-footer .footer-social a {
+  background: rgba(26, 26, 26, 0.8) !important;
+}
+
+html.dark footer.skillnode-live-footer .footer-card {
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.9);
+}
+
+html.dark footer.skillnode-live-footer .footer-panel,
+html.dark footer.skillnode-live-footer .footer-social a {
+  border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+html.dark footer.skillnode-live-footer .footer-card::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 26, 26, 0.7),
+    rgba(26, 26, 26, 0.4),
+    transparent
+  ) !important;
+}
+
+html.dark footer.skillnode-live-footer .footer-col h3 {
+  color: #ffffff !important;
+}
+
+html.dark footer.skillnode-live-footer .footer-brand p,
+html.dark footer.skillnode-live-footer .footer-col a,
+html.dark footer.skillnode-live-footer .footer-col a:visited,
+html.dark footer.skillnode-live-footer .footer-legal a,
+html.dark footer.skillnode-live-footer .footer-legal a:visited,
+html.dark footer.skillnode-live-footer .footer-bottom,
+html.dark footer.skillnode-live-footer .footer-social a {
+  color: #ffffff !important;
+}
+
+html.dark footer.skillnode-live-footer .footer-col a:hover,
+html.dark footer.skillnode-live-footer .footer-col a:focus-visible,
+html.dark footer.skillnode-live-footer .footer-legal a:hover,
+html.dark footer.skillnode-live-footer .footer-legal a:focus-visible {
+  color: #ffffff !important;
+}
+
+html.dark footer.skillnode-live-footer .footer-social a:hover {
+  color: #ffffff !important;
+  border-color: #00439c !important;
+  background: rgba(26, 26, 26, 0.8) !important;
+}
+
+html.dark footer.skillnode-live-footer .footer-social svg {
+  color: #ffffff !important;
+  stroke: currentColor !important;
+}
+
+html.dark footer.skillnode-live-footer .footer-social a:nth-child(2) svg {
+  fill: currentColor !important;
+  stroke: none !important;
+}
+
+/* Preserve strong black footer content in the bright theme. */
+html:not(.dark) footer.skillnode-live-footer.site-footer,
+html:not(.dark) footer.skillnode-live-footer .footer-brand p,
+html:not(.dark) footer.skillnode-live-footer .footer-col h3,
+html:not(.dark) footer.skillnode-live-footer .footer-col a,
+html:not(.dark) footer.skillnode-live-footer .footer-col a:visited,
+html:not(.dark) footer.skillnode-live-footer .footer-legal a,
+html:not(.dark) footer.skillnode-live-footer .footer-legal a:visited,
+html:not(.dark) footer.skillnode-live-footer .footer-bottom,
+html:not(.dark) footer.skillnode-live-footer .footer-social a {
+  color: #020817 !important;
+}
+
+html:not(.dark) footer.skillnode-live-footer .footer-col a:hover,
+html:not(.dark) footer.skillnode-live-footer .footer-col a:focus-visible,
+html:not(.dark) footer.skillnode-live-footer .footer-legal a:hover,
+html:not(.dark) footer.skillnode-live-footer .footer-legal a:focus-visible,
+html:not(.dark) footer.skillnode-live-footer .footer-social a:hover {
+  color: #020817 !important;
+}
+
+html:not(.dark) footer.skillnode-live-footer .footer-social svg {
+  color: #020817 !important;
+  stroke: currentColor !important;
+}
+
+html:not(.dark) footer.skillnode-live-footer .footer-social a:nth-child(2) svg {
+  fill: currentColor !important;
+  stroke: none !important;
+}

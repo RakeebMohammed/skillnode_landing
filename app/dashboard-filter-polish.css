@@ -1,2 +1,80 @@
 /* Compact, single-row dashboard filters. */
 .activity-filters,.table-filters{display:flex;align-items:center;flex-wrap:nowrap;gap:10px;overflow-x:auto;padding:4px 2px 16px;scrollbar-width:thin}.activity-filters{border-bottom:1px solid #e6eee9}.activity-filters select,.table-filters select,.activity-search,.table-filters .table-search{height:42px;flex:0 0 auto;border:1px solid #dce7e0;border-radius:10px;background:#fff;color:#33443b;box-shadow:0 1px 2px rgb(19 54 35 / .03);font-size:13px}.activity-filters select,.table-filters select{min-width:132px;padding:0 30px 0 12px}.activity-search{width:300px;padding:0 12px}.activity-search span{font-size:16px}.table-filters .table-search{width:300px;min-width:300px;margin:0;padding:0 13px}.activity-filters select:focus,.table-filters select:focus,.activity-search:focus-within,.table-filters .table-search:focus{outline:0;border-color:#258150;box-shadow:0 0 0 3px rgb(37 129 80 / .13)}.dark .activity-filters{border-color:#314238}.dark .activity-filters select,.dark .table-filters select,.dark .activity-search,.dark .table-filters .table-search{border-color:#314238;background:#1b2920;color:#e4eee7}@media(max-width:650px){.activity-filters,.table-filters{margin-right:-4px;padding-bottom:12px}.activity-search{width:260px}.table-filters .table-search{width:260px;min-width:260px}}
+
+/* The analytics dashboard is always light, independent of the public theme. */
+html:has(.admin-app) {
+  color-scheme: light !important;
+  scrollbar-color: #becbc3 #f8faf9;
+  scrollbar-width: thin;
+}
+
+.dark .admin-app .activity-filters {
+  border-color: #e6eee9;
+}
+
+.dark .admin-app .activity-filters select,
+.dark .admin-app .table-filters select,
+.dark .admin-app .activity-search,
+.dark .admin-app .table-filters .table-search {
+  color: #33443b !important;
+  background: #ffffff !important;
+  border-color: #dce7e0 !important;
+}
+
+.admin-app .activity-search input {
+  color: #26362d !important;
+  background: transparent !important;
+  caret-color: #258150;
+}
+
+.admin-app .activity-search input::placeholder,
+.admin-app .table-search::placeholder {
+  color: #87948d !important;
+  opacity: 1;
+}
+
+.admin-app .admin-sidebar nav,
+.admin-app .activity-filters,
+.admin-app .table-filters,
+.admin-app .activity-table-wrap,
+.admin-app .table-wrap {
+  scrollbar-color: #becbc3 transparent;
+  scrollbar-width: thin;
+}
+
+.admin-app .admin-sidebar nav::-webkit-scrollbar,
+.admin-app .activity-filters::-webkit-scrollbar,
+.admin-app .table-filters::-webkit-scrollbar,
+.admin-app .activity-table-wrap::-webkit-scrollbar,
+.admin-app .table-wrap::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.admin-app .admin-sidebar nav::-webkit-scrollbar-track,
+.admin-app .activity-filters::-webkit-scrollbar-track,
+.admin-app .table-filters::-webkit-scrollbar-track,
+.admin-app .activity-table-wrap::-webkit-scrollbar-track,
+.admin-app .table-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-app .admin-sidebar nav::-webkit-scrollbar-thumb,
+.admin-app .activity-filters::-webkit-scrollbar-thumb,
+.admin-app .table-filters::-webkit-scrollbar-thumb,
+.admin-app .activity-table-wrap::-webkit-scrollbar-thumb,
+.admin-app .table-wrap::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: #becbc3;
+  background-clip: padding-box;
+}
+
+.admin-app .admin-sidebar nav::-webkit-scrollbar-thumb:hover,
+.admin-app .activity-filters::-webkit-scrollbar-thumb:hover,
+.admin-app .table-filters::-webkit-scrollbar-thumb:hover,
+.admin-app .activity-table-wrap::-webkit-scrollbar-thumb:hover,
+.admin-app .table-wrap::-webkit-scrollbar-thumb:hover {
+  background: #8fa198;
+  background-clip: padding-box;
+}

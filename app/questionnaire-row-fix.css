@@ -1,0 +1,2 @@
+/* Override the base form's column layout for option lists. */
+.lead-form .choice-grid{display:flex!important;flex-direction:row!important;align-items:center!important;flex-wrap:nowrap!important}.lead-form .choice-grid button{grid-column:auto!important;flex:0 0 auto!important}
