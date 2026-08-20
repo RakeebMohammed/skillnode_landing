@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 type Intent = "hire" | "work" | "explore" | "";
 type Budget = "under-10k" | "10k-50k" | "50k-2l" | "2l-plus" | "";
@@ -29,8 +29,10 @@ const BUDGET_OPTIONS: { value: Budget; label: string }[] = [
 ];
 
 export default function QuestionnaireForm() {
+  const cardRef = useRef<HTMLDivElement>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submittedHeight, setSubmittedHeight] = useState<number | null>(null);
   const [error, setError] = useState("");
   const [form, setForm] = useState<FormState>({
     intent: "",
@@ -85,6 +87,14 @@ export default function QuestionnaireForm() {
       if (!response.ok) {
         throw new Error(result.error || "Unable to submit your questionnaire.");
       }
+      if (window.matchMedia("(max-width: 720px)").matches) {
+        const heroCopy = cardRef.current?.previousElementSibling as HTMLElement | null;
+        const heroCopyHeight = heroCopy?.getBoundingClientRect().height;
+        if (heroCopyHeight) setSubmittedHeight(Math.ceil(heroCopyHeight));
+      }
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
       setSubmitted(true);
     } catch (submitError) {
       setError(
@@ -99,7 +109,11 @@ export default function QuestionnaireForm() {
 
   if (submitted) {
     return (
-      <div className="qform-card">
+      <div
+        ref={cardRef}
+        className="qform-card qform-card-submitted"
+        style={submittedHeight ? { minHeight: submittedHeight } : undefined}
+      >
         <div className="qform-success">
           <div className="check">✓</div>
           <h3>You&apos;re on the list!</h3>
@@ -113,7 +127,7 @@ export default function QuestionnaireForm() {
   }
 
   return (
-    <div className="qform-card">
+    <div ref={cardRef} className="qform-card">
       <div className="qform-head">
         <h2>Tell us what you need</h2>
         <p>Two minutes. No spam. We&apos;ll match you with the right people.</p>

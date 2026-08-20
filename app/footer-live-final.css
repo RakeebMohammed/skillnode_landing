@@ -252,6 +252,7 @@ footer.skillnode-live-footer .footer-wordmark {
 
 html.dark footer.skillnode-live-footer .footer-logo {
   filter: brightness(0) invert(1);
+  clip-path: inset(0 4.25% 0 0);
 }
 
 footer.skillnode-live-footer .footer-brand::after {

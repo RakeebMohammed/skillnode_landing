@@ -1186,12 +1186,14 @@ body {
 .header-logo.header-logo-white img,
 .mobile-logo.header-logo-white img {
   filter: brightness(0) invert(1);
+  clip-path: inset(0 4.25% 0 0);
 }
 
 /* The root theme class is set before React mounts, preventing a dark-mode flash. */
 .dark .header-logo img,
 .dark .mobile-logo img {
   filter: brightness(0) invert(1);
+  clip-path: inset(0 4.25% 0 0);
 }
 
 .header-logo::after,
@@ -1605,11 +1607,50 @@ html.dark .site-footer .footer-col h3 {
 
   .header-logo::after,
   .mobile-logo::after {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
   }
 
   .mobile-nav {
     padding: 24px;
+  }
+}
+
+/* Prevent mobile focus zoom and center the compact success state. */
+.qform-card-submitted {
+  display: grid;
+  width: 100%;
+  place-items: center;
+}
+
+.qform-card-submitted .qform-success {
+  width: 100%;
+}
+
+@media (max-width: 720px) {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  .qform-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .qform-body .field input,
+  .qform-body .field textarea,
+  .qform-body .field select {
+    font-size: 16px !important;
+  }
+
+  .qform-option,
+  .qform-next {
+    touch-action: manipulation;
+  }
+
+  .qform-card-submitted .qform-success {
+    padding: 48px 20px;
   }
 }
