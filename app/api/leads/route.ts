@@ -12,12 +12,14 @@ export async function POST(req: Request) {
     const name = typeof body.name === "string" ? body.name.trim() : "";
     const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
     const phone = typeof body.phone === "string" ? body.phone.trim() : "";
+    const interest = typeof body.interest === "string" ? body.interest.trim() : "";
     const message = typeof body.message === "string" ? body.message.trim() : "";
     const fields: Record<string, string> = {};
     if (name.length < 2 || name.length > 100) fields.name = "Please enter a valid name.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) fields.email = "Please enter a valid email address.";
     if (!/^[+()\-\s.\d]{7,25}$/.test(phone) || phone.replace(/\D/g, "").length < 7) fields.phone = "Please enter a valid phone number.";
-    if (message.length < 10 || message.length > 2000) fields.message = "Please enter a message between 10 and 2,000 characters.";
+    if (!["Hire talent", "Find work", "Build a project", "Partnership or business", "Something else"].includes(interest)) fields.interest = "Please choose what you are interested in.";
+    if (message.length > 2000) fields.message = "Please keep your message under 2,000 characters.";
     if (Object.keys(fields).length) return NextResponse.json({ error: "Please correct the highlighted fields.", fields }, { status: 400 });
 
     await connectDB();
@@ -31,7 +33,7 @@ export async function POST(req: Request) {
     const traffic = classifyTraffic(body.pageUrl, body.referrer || req.headers.get("referer"));
     if (body.sessionId) session = await Session.findOne({ sessionId: body.sessionId }).lean();
     const lead = await Lead.create({
-      visitorId: body.visitorId, sessionId: body.sessionId, name, email, phone, message,
+      visitorId: body.visitorId, sessionId: body.sessionId, name, email, phone, interest, message,
       source: session?.source || traffic.source, medium: session?.medium || traffic.medium, channel: session?.channel || traffic.channel, campaign: session?.campaign || traffic.campaign, content: session?.content || traffic.content, referrer: session?.referrer || traffic.referrer,
       ip, ...geo, device, browser, os,
     });

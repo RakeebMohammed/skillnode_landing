@@ -1,0 +1,1 @@
+.lead-form select{width:100%;border:1px solid var(--sk-line);border-radius:12px;background:var(--sk-bg);color:var(--sk-text);padding:13px 40px 13px 14px;outline:none}.lead-form select:focus{border-color:#111}.dark .lead-form select:focus{border-color:#fff}.lead-form .optional{color:var(--sk-muted);font-weight:400}

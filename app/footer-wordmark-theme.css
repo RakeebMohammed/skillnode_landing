@@ -1,0 +1,2 @@
+/* Keep the lower SkillNode brand wordmark visible in dark mode. */
+.dark .exact-wordmark{background-image:linear-gradient(90deg,#124C981A,#0596691A,#124C981A);background-clip:text;-webkit-background-clip:text;color:transparent}

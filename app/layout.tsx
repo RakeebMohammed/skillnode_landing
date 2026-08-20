@@ -18,6 +18,8 @@ import "./footer-logo-theme.css";
 import "./skillnode-fonts.css";
 import "./footer-reference.css";
 import "./dashboard-filter-polish.css";
+import "./footer-wordmark-theme.css";
+import "./landing-form-polish.css";
 
 export const metadata: Metadata = {
   title: "SkillNode — Connect with verified professionals",

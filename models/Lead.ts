@@ -6,6 +6,7 @@ const LeadSchema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, index: true },
   phone: String,
+  interest: { type: String, required: true, index: true },
   message: String,
   source: String,
   medium: String,

@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { ReactNode } from "react";
 
 const links = [
-  ["/admin", "Overview"], ["/admin/activity", "Recent Activity"], ["/admin/organic-ai", "Organic & AI Traffic"], ["/admin/live-users", "Live Users"], ["/admin/pages", "Page & Post Views"], ["/admin/clicks", "Link Clicks"], ["/admin/traffic", "Traffic Sources"], ["/admin/devices", "Devices"], ["/admin/country", "Country"], ["/admin/sessions", "Sessions"], ["/admin/user-flow", "User Flow"], ["/admin/booking", "Booking Views"], ["/admin/leads", "Leads"],
+  ["/admin", "Overview"], ["/admin/activity", "Recent Activity"], ["/admin/live-users", "Live Users"], ["/admin/pages", "Page & Post Views"], ["/admin/clicks", "Link Clicks"], ["/admin/traffic", "Traffic Sources"], ["/admin/devices", "Devices"], ["/admin/country", "Country"], ["/admin/sessions", "Sessions"], ["/admin/user-flow", "User Flow"], ["/admin/leads", "Leads"],
 ];
 
 export default function AdminShell({ children, email }: { children: ReactNode; email: string }) {
