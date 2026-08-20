@@ -1185,15 +1185,31 @@ body {
 
 .header-logo.header-logo-white img,
 .mobile-logo.header-logo-white img {
-  filter: brightness(0) invert(1);
-  clip-path: inset(0 4.25% 0 0);
+  opacity: 0;
+  filter: none;
+  clip-path: none;
 }
 
 /* The root theme class is set before React mounts, preventing a dark-mode flash. */
 .dark .header-logo img,
 .dark .mobile-logo img {
-  filter: brightness(0) invert(1);
-  clip-path: inset(0 4.25% 0 0);
+  opacity: 0;
+  filter: none;
+  clip-path: none;
+}
+
+.header-logo.header-logo-white::before,
+.mobile-logo.header-logo-white::before,
+.dark .header-logo::before,
+.dark .mobile-logo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  clip-path: inset(0 5% 0 0);
+  -webkit-mask: url("/skillnode-logo.svg") left center / 100% 100% no-repeat;
+  mask: url("/skillnode-logo.svg") left center / 100% 100% no-repeat;
+  pointer-events: none;
 }
 
 .header-logo::after,
@@ -1204,8 +1220,16 @@ body {
   bottom: 0;
   width: 6px;
   height: 6px;
+  display: none;
   border-radius: 50%;
   background: #049669;
+}
+
+.header-logo.header-logo-white::after,
+.mobile-logo.header-logo-white::after,
+.dark .header-logo::after,
+.dark .mobile-logo::after {
+  display: block;
 }
 
 .header-navigation {

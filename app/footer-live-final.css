@@ -82,6 +82,12 @@ footer.skillnode-live-footer .footer-logo {
   height: auto;
 }
 
+footer.skillnode-live-footer .footer-brand > a {
+  position: relative;
+  display: inline-flex;
+  width: 144px;
+}
+
 footer.skillnode-live-footer .footer-brand p {
   max-width: 448px;
   margin: 16px 0 0;
@@ -251,8 +257,31 @@ footer.skillnode-live-footer .footer-wordmark {
 }
 
 html.dark footer.skillnode-live-footer .footer-logo {
-  filter: brightness(0) invert(1);
-  clip-path: inset(0 4.25% 0 0);
+  opacity: 0;
+  filter: none;
+  clip-path: none;
+}
+
+html.dark footer.skillnode-live-footer .footer-brand > a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  clip-path: inset(0 5% 0 0);
+  -webkit-mask: url("/skillnode-logo.svg") left center / 100% 100% no-repeat;
+  mask: url("/skillnode-logo.svg") left center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+
+html.dark footer.skillnode-live-footer .footer-brand > a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #049669;
 }
 
 footer.skillnode-live-footer .footer-brand::after {
@@ -260,15 +289,7 @@ footer.skillnode-live-footer .footer-brand::after {
 }
 
 html.dark footer.skillnode-live-footer .footer-brand::after {
-  content: "";
-  position: absolute;
-  top: 19px;
-  left: 138px;
-  display: block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #049669;
+  display: none;
 }
 
 @media (max-width: 800px) {
