@@ -22,7 +22,7 @@ export async function GET() {
       Session.aggregate([{ $match: { startedAt: { $gte: since }, campaign: { $nin: [null, ""] } } }, { $group: { _id: { source: "$source", campaign: "$campaign" }, count: { $sum: 1 }, leads: { $sum: 0 } } }, { $sort: { count: -1 } }, { $limit: 8 }]),
       Session.aggregate([{ $match: { startedAt: { $gte: since } } }, { $group: { _id: "$device", count: { $sum: 1 } } }, { $sort: { count: -1 } }]),
       Session.aggregate([{ $match: { startedAt: { $gte: since } } }, { $group: { _id: "$country", count: { $sum: 1 } } }, { $sort: { count: -1 } }, { $limit: 10 }]),
-      Event.find({ createdAt: { $gte: new Date(Date.now() - 24 * 3600000) } }).sort({ createdAt: -1 }).limit(12).lean(),
+      Event.find({ createdAt: { $gte: new Date(Date.now() - 24 * 3600000) }, $or: [{ type: { $ne: "click" } }, { "metadata.placement": { $in: ["header", "footer"] } }] }).sort({ createdAt: -1 }).limit(12).lean(),
       Session.find({ startedAt: { $gte: since } }).sort({ startedAt: -1 }).limit(8).select("visitorId landingPage source medium channel campaign ip country city device browser os startedAt pageCount duration").lean(),
       Event.aggregate([{ $match: { type: "page_view", createdAt: { $gte: since } } }, { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } }, count: { $sum: 1 } } }, { $sort: { _id: 1 } }]),
     ]);

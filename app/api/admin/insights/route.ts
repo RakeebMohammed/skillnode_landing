@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ rows });
     }
     if (kind === "clicks") {
-      const rows = await Event.aggregate([{ $match: { type: "click" } }, { $group: { _id: { label: "$metadata.label", href: "$metadata.href", element: "$element" }, clicks: { $sum: 1 }, visitors: { $addToSet: "$visitorId" }, last: { $max: "$createdAt" } } }, { $project: { label: "$_id.label", href: "$_id.href", element: "$_id.element", clicks: 1, visitors: { $size: "$visitors" }, last: 1 } }, { $sort: { clicks: -1 } }, { $limit: 100 }]);
+      const rows = await Event.aggregate([{ $match: { type: "click", "metadata.placement": { $in: ["header", "footer"] } } }, { $group: { _id: { label: "$metadata.label", href: "$metadata.href", placement: "$metadata.placement" }, clicks: { $sum: 1 }, visitors: { $addToSet: "$visitorId" }, last: { $max: "$createdAt" } } }, { $project: { label: "$_id.label", href: "$_id.href", placement: "$_id.placement", clicks: 1, visitors: { $size: "$visitors" }, last: 1 } }, { $sort: { clicks: -1 } }, { $limit: 100 }]);
       return NextResponse.json({ rows });
     }
     if (kind === "countries") {
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ rows });
     }
     if (kind === "booking") {
-      const rows = await Event.aggregate([{ $match: { type: "click", $or: [{ "metadata.label": /book|booking|appointment|consult/i }, { "metadata.href": /book|booking|appointment|consult/i }] } }, { $group: { _id: { label: "$metadata.label", page: "$page" }, clicks: { $sum: 1 }, visitors: { $addToSet: "$visitorId" }, last: { $max: "$createdAt" } } }, { $project: { label: "$_id.label", page: "$_id.page", clicks: 1, visitors: { $size: "$visitors" }, last: 1 } }, { $sort: { clicks: -1 } }]);
+      const rows = await Event.aggregate([{ $match: { type: "click", "metadata.placement": { $in: ["header", "footer"] }, $or: [{ "metadata.label": /book|booking|appointment|consult/i }, { "metadata.href": /book|booking|appointment|consult/i }] } }, { $group: { _id: { label: "$metadata.label", page: "$page" }, clicks: { $sum: 1 }, visitors: { $addToSet: "$visitorId" }, last: { $max: "$createdAt" } } }, { $project: { label: "$_id.label", page: "$_id.page", clicks: 1, visitors: { $size: "$visitors" }, last: 1 } }, { $sort: { clicks: -1 } }]);
       return NextResponse.json({ rows });
     }
     const sessions = await Session.find().sort({ lastSeen: -1 }).limit(50).lean();
