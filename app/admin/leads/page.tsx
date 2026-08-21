@@ -10,13 +10,13 @@ type LeadRow = {
   name: string;
   email: string;
   phone?: string;
-  intent?: string;
-  category?: string;
-  budget?: string;
-  message?: string;
-  profileType?: string;
-  interest?: string;
-  timeline?: string;
+  freelancerCategory?: string;
+  freelancerSubcategory?: string;
+  services?: string;
+  experience?: string;
+  workMode?: string;
+  serviceLocation?: string;
+  availability?: string;
   source?: string;
   medium?: string;
   channel?: string;
@@ -35,29 +35,50 @@ type LeadRow = {
 
 const EMPTY = "\u2014";
 
-const INTENT_LABELS: Record<string, string> = {
-  hire: "Hire talent",
-  work: "Find work",
-  explore: "Just exploring",
+const EXPERIENCE_LABELS: Record<string, string> = {
+  starting: "Just starting",
+  "under-1": "Under 1 year",
+  "1-3": "1–3 years",
+  "3-5": "3–5 years",
+  "5-plus": "5+ years",
 };
 
-const BUDGET_LABELS: Record<string, string> = {
-  "under-10k": "Under \u20b910,000",
-  "10k-50k": "\u20b910,000 \u2013 \u20b950,000",
-  "50k-2l": "\u20b950,000 \u2013 \u20b92,00,000",
-  "2l-plus": "\u20b92,00,000+",
+const WORK_MODE_LABELS: Record<string, string> = {
+  remote: "Remote",
+  onsite: "On-site",
+  both: "Remote & on-site",
 };
 
-function intentAnswer(lead: LeadRow) {
-  return (lead.intent && INTENT_LABELS[lead.intent]) || lead.profileType || EMPTY;
+const AVAILABILITY_LABELS: Record<string, string> = {
+  immediate: "Available immediately",
+  "within-month": "Available within a month",
+  "part-time": "Part-time availability",
+  "project-basis": "Project-by-project",
+};
+
+function RequirementDetails({ lead }: { lead: LeadRow }) {
+  return (
+    <div className="lead-answer-stack">
+      <b>{lead.freelancerCategory || EMPTY}</b>
+      {lead.freelancerSubcategory && <small>{lead.freelancerSubcategory}</small>}
+      {lead.services && <span>{lead.services}</span>}
+    </div>
+  );
 }
 
-function requirementAnswer(lead: LeadRow) {
-  return lead.category || lead.interest || EMPTY;
-}
-
-function budgetAnswer(lead: LeadRow) {
-  return (lead.budget && BUDGET_LABELS[lead.budget]) || lead.timeline || "Not provided";
+function WorkDetails({ lead }: { lead: LeadRow }) {
+  return (
+    <div className="lead-answer-stack">
+      <b>{(lead.experience && EXPERIENCE_LABELS[lead.experience]) || "Experience not provided"}</b>
+      <small>
+        {[
+          lead.workMode && WORK_MODE_LABELS[lead.workMode],
+          lead.availability && AVAILABILITY_LABELS[lead.availability],
+        ].filter(Boolean).join(" · ") || "Work preference not provided"}
+      </small>
+      {lead.serviceLocation && <span>{lead.serviceLocation}</span>}
+    </div>
+  );
 }
 
 function exportValue(value: unknown) {
@@ -68,6 +89,7 @@ export default function LeadsPage() {
   const [rows, setRows] = useState<LeadRow[]>([]);
   const [query, setQuery] = useState("");
   const [source, setSource] = useState("");
+  const [campaign, setCampaign] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -95,51 +117,55 @@ export default function LeadsPage() {
     [rows],
   );
 
+  const campaigns = useMemo(
+    () => [...new Set(rows.map((row) => row.campaign).filter((item): item is string => Boolean(item)))].sort(),
+    [rows],
+  );
+
   const filtered = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
     return rows.filter((row) => {
       if (source && (row.source || "Direct") !== source) return false;
+      if (campaign && row.campaign !== campaign) return false;
       if (!normalizedQuery) return true;
 
       return [
         row.name,
         row.email,
         row.phone,
-        intentAnswer(row),
-        requirementAnswer(row),
-        budgetAnswer(row),
-        row.message,
+        row.freelancerCategory,
+        row.freelancerSubcategory,
+        row.services,
+        row.experience,
+        row.workMode,
+        row.serviceLocation,
+        row.availability,
+        row.experience && EXPERIENCE_LABELS[row.experience],
+        row.workMode && WORK_MODE_LABELS[row.workMode],
+        row.availability && AVAILABILITY_LABELS[row.availability],
         row.source,
-        row.medium,
-        row.channel,
         row.campaign,
-        row.content,
-        row.referrer,
-        row.city,
-        row.region,
-        row.country,
-        row.ip,
-        row.device,
-        row.browser,
-        row.os,
       ]
         .filter(Boolean)
         .join(" ")
         .toLowerCase()
         .includes(normalizedQuery);
     });
-  }, [rows, query, source]);
+  }, [rows, query, source, campaign]);
 
   function exportCsv() {
     const headers = [
       "Name",
       "Email",
       "Phone",
-      "Intent",
-      "Requirement",
-      "Budget",
-      "Message",
+      "Freelancer category",
+      "Freelancer specialisation",
+      "Freelancer services",
+      "Experience",
+      "Work mode",
+      "Service location",
+      "Availability",
       "Source",
       "Medium",
       "Channel",
@@ -161,10 +187,13 @@ export default function LeadsPage() {
       row.name,
       row.email,
       row.phone || "",
-      intentAnswer(row),
-      requirementAnswer(row),
-      budgetAnswer(row),
-      row.message || "",
+      row.freelancerCategory || "",
+      row.freelancerSubcategory || "",
+      row.services || "",
+      (row.experience && EXPERIENCE_LABELS[row.experience]) || "",
+      (row.workMode && WORK_MODE_LABELS[row.workMode]) || "",
+      row.serviceLocation || "",
+      (row.availability && AVAILABILITY_LABELS[row.availability]) || "",
       row.source || "Direct",
       row.medium || "none",
       row.channel || "Direct",
@@ -198,8 +227,8 @@ export default function LeadsPage() {
       <div className="admin-top">
         <div>
           <div className="crumb">Home / Analytics / Leads</div>
-          <h1>Questionnaire responses</h1>
-          <p>Every submitted answer with its contact and campaign attribution.</p>
+          <h1>Freelancer leads</h1>
+          <p>Every response submitted through the current freelancer questionnaire.</p>
         </div>
         <button className="primary-btn" onClick={exportCsv} disabled={!filtered.length}>
           Export CSV
@@ -210,7 +239,7 @@ export default function LeadsPage() {
         <TableFilters
           query={query}
           onQueryChange={setQuery}
-          placeholder="Search contacts, answers, messages or attribution..."
+          placeholder="Search name, email, phone, skills, location or campaign..."
         >
           <select
             value={source}
@@ -222,20 +251,29 @@ export default function LeadsPage() {
               <option key={item}>{item}</option>
             ))}
           </select>
+          <select
+            value={campaign}
+            onChange={(event) => setCampaign(event.target.value)}
+            aria-label="Filter by campaign"
+          >
+            <option value="">All campaigns</option>
+            {campaigns.map((item) => (
+              <option key={item}>{item}</option>
+            ))}
+          </select>
         </TableFilters>
 
         <p className="leads-export-note">
-          Compact view shown below. Additional details, location, IP, device, and complete attribution are included in Export CSV.
+          Questionnaire details are shown below. IP, device, visitor IDs, location metadata, and complete attribution are included in Export CSV.
         </p>
 
         <table className="leads-table">
           <thead>
             <tr>
               <th className="lead-col-contact">Contact</th>
-              <th className="lead-col-intent">Intent</th>
-              <th className="lead-col-requirement">Requirement</th>
-              <th className="lead-col-budget">Budget / timeline</th>
-              <th className="lead-col-attribution">Attribution</th>
+              <th className="lead-col-requirement">Category / services</th>
+              <th className="lead-col-budget">Work details</th>
+              <th className="lead-col-attribution">Campaign / source</th>
               <th className="lead-col-submitted">Submitted</th>
             </tr>
           </thead>
@@ -249,10 +287,9 @@ export default function LeadsPage() {
                   <br />
                   <small>{row.phone || "No phone provided"}</small>
                 </td>
-                <td className="lead-col-intent" data-label="Intent">{intentAnswer(row)}</td>
-                <td className="lead-col-requirement" data-label="Requirement">{requirementAnswer(row)}</td>
-                <td className="lead-col-budget" data-label="Budget / timeline">{budgetAnswer(row)}</td>
-                <td className="lead-col-attribution" data-label="Attribution">
+                <td className="lead-col-requirement" data-label="Category / services"><RequirementDetails lead={row} /></td>
+                <td className="lead-col-budget" data-label="Work details"><WorkDetails lead={row} /></td>
+                <td className="lead-col-attribution" data-label="Campaign / source">
                   <b>{row.source || "Direct"}</b>
                   <br />
                   <small>{row.channel || "Direct"} / {row.medium || "none"}</small>

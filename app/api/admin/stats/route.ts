@@ -15,7 +15,7 @@ export async function GET() {
       Visitor.countDocuments({ lastSeen: { $gte: since } }),
       Session.countDocuments({ startedAt: { $gte: since } }),
       Event.countDocuments({ type: "page_view", createdAt: { $gte: since } }),
-      Lead.countDocuments({ createdAt: { $gte: since } }),
+      Lead.countDocuments({ createdAt: { $gte: since }, $or: [{ formType: "freelancer" }, { freelancerCategory: { $exists: true, $nin: [null, ""] } }] }),
       Visitor.countDocuments({ lastSeen: { $gte: liveSince } }),
       Session.aggregate([{ $match: { startedAt: { $gte: since } } }, { $group: { _id: "$source", count: { $sum: 1 } } }, { $sort: { count: -1 } }]),
       Session.aggregate([{ $match: { startedAt: { $gte: since } } }, { $group: { _id: "$channel", count: { $sum: 1 } } }, { $sort: { count: -1 } }]),

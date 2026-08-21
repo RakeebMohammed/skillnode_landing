@@ -33,12 +33,11 @@ export default function Home() {
                 India&apos;s First Hyperlocal Marketplace
               </span>
               <h1>
-                Hire talent. <span className="accent">Empower freelancers.</span>
+                Turn your skills into opportunity. <span className="accent">Work locally or globally.</span>
               </h1>
               <p className="lede">
-                Connect with verified professionals near you or across India.
-                Post a project, get proposals, and pay securely — all in one
-                place.
+                Join SkillNode, showcase the services you offer, and get discovered
+                by businesses looking for verified professionals near them or across India.
               </p>
               <div className="hero-stats">
                 <div>

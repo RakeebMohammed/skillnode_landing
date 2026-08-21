@@ -3,6 +3,7 @@ import { connectDB } from "@/lib/mongodb";
 import { getClientIp, parseUserAgent } from "@/lib/request";
 import { geoFromHeaders, lookupGeo } from "@/lib/geo";
 import { classifyTraffic } from "@/lib/traffic";
+import { findFreelancerCategory } from "@/lib/freelancer-categories";
 import Lead from "@/models/Lead";
 import Session from "@/models/Session";
 
@@ -15,30 +16,31 @@ export async function POST(req: Request) {
     const name = typeof body.name === "string" ? body.name.trim() : "";
     const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
     const phone = typeof body.phone === "string" ? body.phone.trim() : "";
-    const intent = typeof body.intent === "string" ? body.intent.trim() : "";
-    const category = typeof body.category === "string" ? body.category.trim() : "";
-    const budget = typeof body.budget === "string" ? body.budget.trim() : "";
-    const profileType = typeof body.profileType === "string" ? body.profileType.trim() : "";
-    const interest = typeof body.interest === "string" ? body.interest.trim() : "";
-    const timeline = typeof body.timeline === "string" ? body.timeline.trim() : "";
-    const message = typeof body.message === "string" ? body.message.trim() : "";
-    const isCurrentQuestionnaire = ["intent", "category", "budget", "phone"].some(
-      (field) => Object.prototype.hasOwnProperty.call(body, field),
-    );
+    const formType = typeof body.formType === "string" ? body.formType.trim() : "";
+    const freelancerCategory = typeof body.freelancerCategory === "string" ? body.freelancerCategory.trim() : "";
+    const freelancerSubcategory = typeof body.freelancerSubcategory === "string" ? body.freelancerSubcategory.trim() : "";
+    const services = typeof body.services === "string" ? body.services.trim() : "";
+    const experience = typeof body.experience === "string" ? body.experience.trim() : "";
+    const workMode = typeof body.workMode === "string" ? body.workMode.trim() : "";
+    const serviceLocation = typeof body.serviceLocation === "string" ? body.serviceLocation.trim() : "";
+    const availability = typeof body.availability === "string" ? body.availability.trim() : "";
     const fields: Record<string, string> = {};
+
+    if (formType !== "freelancer") {
+      return NextResponse.json({ error: "Unsupported questionnaire type." }, { status: 400 });
+    }
+
     if (name.length < 2 || name.length > 100) fields.name = "Please enter a valid name.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) fields.email = "Please enter a valid email address.";
     if (phone.length > 40) fields.phone = "Please enter a valid phone number.";
-    if (isCurrentQuestionnaire) {
-      if (!["hire", "work", "explore"].includes(intent)) fields.intent = "Please select what brings you to SkillNode.";
-      if (category.length < 2 || category.length > 200) fields.category = "Please describe what you are looking for.";
-      if (budget && !["under-10k", "10k-50k", "50k-2l", "2l-plus"].includes(budget)) fields.budget = "Please select a valid budget range.";
-    } else {
-      if (!["Hiring", "Looking for work", "Business", "Exploring"].includes(profileType)) fields.profileType = "Please select the option that best describes you.";
-      if (!["Find talent", "Find projects", "Build a project", "Partnership", "Other"].includes(interest)) fields.interest = "Please select what you need help with.";
-      if (!["Just exploring", "This week", "This month", "Later"].includes(timeline)) fields.timeline = "Please select your preferred timeline.";
-    }
-    if (message.length > 2000) fields.message = "Please keep your message under 2,000 characters.";
+    const selectedCategory = findFreelancerCategory(freelancerCategory);
+    if (!selectedCategory) fields.freelancerCategory = "Please select a valid service category.";
+    if (!selectedCategory?.subcategories.includes(freelancerSubcategory)) fields.freelancerSubcategory = "Please select a valid specialisation.";
+    if (services.length < 2 || services.length > 800) fields.services = "Please describe your services in 800 characters or fewer.";
+    if (!["starting", "under-1", "1-3", "3-5", "5-plus"].includes(experience)) fields.experience = "Please select your experience.";
+    if (!["remote", "onsite", "both"].includes(workMode)) fields.workMode = "Please select your work preference.";
+    if (serviceLocation.length < 2 || serviceLocation.length > 160) fields.serviceLocation = "Please enter a valid city or service area.";
+    if (!["immediate", "within-month", "part-time", "project-basis"].includes(availability)) fields.availability = "Please select your availability.";
     if (Object.keys(fields).length) return NextResponse.json({ error: "Please correct the highlighted fields.", fields }, { status: 400 });
 
     await connectDB();
@@ -57,13 +59,14 @@ export async function POST(req: Request) {
       name,
       email,
       phone: phone || undefined,
-      intent: isCurrentQuestionnaire ? intent : undefined,
-      category: isCurrentQuestionnaire ? category : undefined,
-      budget: isCurrentQuestionnaire ? budget || undefined : undefined,
-      profileType: isCurrentQuestionnaire ? undefined : profileType,
-      interest: isCurrentQuestionnaire ? undefined : interest,
-      timeline: isCurrentQuestionnaire ? undefined : timeline,
-      message: message || undefined,
+      formType: "freelancer",
+      freelancerCategory,
+      freelancerSubcategory,
+      services,
+      experience,
+      workMode,
+      serviceLocation,
+      availability,
       source: session?.source || traffic.source, medium: session?.medium || traffic.medium, channel: session?.channel || traffic.channel, campaign: session?.campaign || traffic.campaign, content: session?.content || traffic.content, referrer: session?.referrer || traffic.referrer,
       ip, ...geo, device, browser, os,
     });

@@ -942,7 +942,7 @@ img { max-width: 100%; display: block; }
   font-weight: 600;
 }
 
-.qform-intent-options {
+.qform-workmode-options {
   grid-template-columns: repeat(3, 1fr);
 }
 
@@ -1044,7 +1044,7 @@ img { max-width: 100%; display: block; }
 }
 
 @media (max-width: 480px) {
-  .qform-intent-options {
+  .qform-workmode-options {
     grid-template-columns: 1fr;
   }
 
@@ -1651,6 +1651,230 @@ html.dark .site-footer .footer-col h3 {
   width: 100%;
 }
 
+.qform-audience {
+  display: inline-flex;
+  margin-bottom: 5px;
+  color: #059669;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.freelancer-qform-card .qform-dropdown-field {
+  position: relative;
+  min-width: 0;
+}
+
+.freelancer-qform-card .qform-dropdown-field.is-open {
+  z-index: 30;
+}
+
+.freelancer-qform-card .qform-dropdown-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.freelancer-qform-card .qform-dropdown-label small {
+  color: #8a9490;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.freelancer-qform-card .qform-dropdown-trigger {
+  display: flex;
+  width: 100%;
+  min-height: 46px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 14px;
+  border: 1px solid #dedfdf;
+  border-radius: 9px;
+  color: #777d7a;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(14, 24, 19, 0.035);
+  font: 400 14px/1.35 var(--font-body);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.freelancer-qform-card .qform-dropdown-trigger:hover:not(:disabled) {
+  border-color: #a9b2ae;
+  background: #fdfdfd;
+}
+
+.freelancer-qform-card .qform-dropdown-trigger:focus-visible,
+.freelancer-qform-card .qform-dropdown-trigger[aria-expanded="true"] {
+  border-color: #124c98;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(18, 76, 152, 0.12);
+}
+
+.freelancer-qform-card .qform-dropdown-trigger.has-value {
+  color: #181b19;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.freelancer-qform-card .qform-dropdown-trigger:disabled {
+  color: #a0a6a3;
+  background: #f4f5f4;
+  border-color: #e5e7e6;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.freelancer-qform-card .qform-dropdown-value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.freelancer-qform-card .qform-dropdown-chevron {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  margin: -4px 3px 0 0;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.18s ease, margin 0.18s ease;
+}
+
+.freelancer-qform-card .qform-dropdown-trigger[aria-expanded="true"] .qform-dropdown-chevron {
+  margin-top: 4px;
+  transform: rotate(225deg);
+}
+
+.freelancer-qform-card .qform-dropdown-menu {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% - 10px);
+  right: 0;
+  left: 0;
+  max-height: 232px;
+  padding: 6px;
+  overflow-y: auto;
+  border: 1px solid #dedfdf;
+  border-radius: 11px;
+  background: #ffffff;
+  box-shadow: 0 18px 42px rgba(13, 22, 18, 0.16), 0 3px 10px rgba(13, 22, 18, 0.08);
+  scrollbar-width: thin;
+  scrollbar-color: #c7ceca transparent;
+  animation: qform-dropdown-in 0.14s ease-out;
+}
+
+.freelancer-qform-card .qform-dropdown-option {
+  display: flex;
+  width: 100%;
+  min-height: 39px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 7px;
+  color: #313633;
+  background: transparent;
+  font: 400 13px/1.35 var(--font-body);
+  text-align: left;
+  cursor: pointer;
+}
+
+.freelancer-qform-card .qform-dropdown-option.is-highlighted {
+  background: #f3f5f4;
+}
+
+.freelancer-qform-card .qform-dropdown-option.is-selected {
+  color: #124c98;
+  background: #eef4fc;
+  font-weight: 500;
+}
+
+.freelancer-qform-card .qform-dropdown-check {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  color: #ffffff;
+  background: #124c98;
+  font-size: 11px;
+  line-height: 1;
+}
+
+@keyframes qform-dropdown-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dark .freelancer-qform-card .qform-dropdown-label small {
+  color: #89928d;
+}
+
+.dark .freelancer-qform-card .qform-dropdown-trigger {
+  color: #929a96;
+  background: #171817;
+  border-color: #343735;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.dark .freelancer-qform-card .qform-dropdown-trigger:hover:not(:disabled) {
+  border-color: #505552;
+  background: #1a1b1a;
+}
+
+.dark .freelancer-qform-card .qform-dropdown-trigger:focus-visible,
+.dark .freelancer-qform-card .qform-dropdown-trigger[aria-expanded="true"] {
+  border-color: #4f83c5;
+  box-shadow: 0 0 0 3px rgba(79, 131, 197, 0.18);
+}
+
+.dark .freelancer-qform-card .qform-dropdown-trigger.has-value {
+  color: #f4f5f4;
+}
+
+.dark .freelancer-qform-card .qform-dropdown-trigger:disabled {
+  color: #666b68;
+  background: #121312;
+  border-color: #272927;
+}
+
+.dark .freelancer-qform-card .qform-dropdown-menu {
+  border-color: #343735;
+  background: #191a19;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5), 0 3px 10px rgba(0, 0, 0, 0.35);
+  scrollbar-color: #4b504d transparent;
+}
+
+.dark .freelancer-qform-card .qform-dropdown-option {
+  color: #e5e8e6;
+}
+
+.dark .freelancer-qform-card .qform-dropdown-option.is-highlighted {
+  background: #252725;
+}
+
+.dark .freelancer-qform-card .qform-dropdown-option.is-selected {
+  color: #dbeafe;
+  background: rgba(18, 76, 152, 0.34);
+}
+
+.freelancer-qform-card .field textarea {
+  min-height: 74px;
+}
+
+.qform-experience-options {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 @media (max-width: 720px) {
   html {
     -webkit-text-size-adjust: 100%;
@@ -1669,6 +1893,24 @@ html.dark .site-footer .footer-col h3 {
     font-size: 16px !important;
   }
 
+  .freelancer-qform-card .qform-dropdown-trigger {
+    min-height: 50px;
+    font-size: 16px;
+  }
+
+  .freelancer-qform-card .qform-dropdown-trigger.has-value {
+    font-size: 14px;
+  }
+
+  .freelancer-qform-card .qform-dropdown-menu {
+    max-height: 240px;
+  }
+
+  .freelancer-qform-card .qform-dropdown-option {
+    min-height: 43px;
+    font-size: 14px;
+  }
+
   .qform-option,
   .qform-next {
     touch-action: manipulation;
@@ -1676,5 +1918,9 @@ html.dark .site-footer .footer-col h3 {
 
   .qform-card-submitted .qform-success {
     padding: 48px 20px;
+  }
+
+  .qform-experience-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
